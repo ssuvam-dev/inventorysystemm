@@ -1,0 +1,359 @@
+{%load static%}
+{%include 'index.html'%}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Sales{%endblock%}</title>
+    <link rel="stylesheet" href="{%static 'date_picker\css\nepali.datepicker.v3.7.min.css'%}">
+    <script type="text/javascript">
+        console.log("HEllow wrold")
+        function calc() {
+            var total = document.getElementById('totals')
+            console.log(total.value)
+            var paid = document.getElementById('paids')
+            console.log(paid.value)
+            var lef = total.value - paid.value
+            var app = document.getElementById('lefts').value = lef
+            app = lef;
+            console.log(lef)
+        }
+        function findproduct() {
+            var product = document.getElementById('product').value
+
+            console.log(product)
+        }
+        function ratess() {
+            var quan = document.getElementById('quantity')
+            var rats = document.getElementById('rate')
+            var dis = document.getElementById('discount')
+            var final = quan.value * rats.value
+            var discount = (dis.value * final) / 100
+            var tots = document.getElementById('totals').value = final - discount
+            tots = Math.round(final - discount, 2);
+        }
+    </script>
+    <style>
+        {
+            %block style%
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: cursive;
+        }
+
+        .arr {
+            color: black;
+            text-decoration: none;
+            margin-left: 2px;
+            ;
+        }
+
+        .arr:active {
+            color: white;
+        }
+
+        body {
+            overflow-y: hidden;
+        }
+
+        tr {
+            padding-top: 10px;
+        }
+
+        td {
+            padding-top: 10px;
+            padding-left: 5px;
+        }
+
+        .same {
+            border: 1px solid #0001;
+            background-color: #FFFFE0;
+            padding: .5em 1em;
+            width: 40%;
+        }
+
+        button {
+            width: 30px;
+            background-color: #0000FF;
+            height: 0.8cm;
+            width: 3cm;
+            color: #fff;
+            border-radius: 10cm;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0000CD;
+        }
+
+        .title {
+            padding-left: 12cm;
+        }
+
+        .searchsale {
+            display: flex;
+        }
+
+        .others {
+            padding-left: 10cm;
+        }
+
+        .searchfield {
+            border-radius: 14cm;
+            text-align: center;
+            outline: none;
+        }
+
+        th {
+            width: 100px;
+
+        }
+
+        table {
+            margin-top: 10px;
+            width: 29cm;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            background-color: salmon;
+        }
+
+        thead tr th {
+            color: #220;
+            text-align: center;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f7f7f7;
+
+        }
+
+        .pagination {
+            padding-top: 0.3cm;
+            padding-left: 5.3cm;
+            font-style: normal;
+            font-size: 20px;
+
+        }
+
+        .mes {
+            color: red;
+            font-size: small;
+        }
+
+        .total {
+            margin-top: 5px;
+            padding-left: 0%;
+
+        }
+
+        .allall {
+
+            display: flex;
+        }
+
+        .credit {
+            padding-top: 0.3cm;
+            padding-left: 7cm;
+        }
+
+        .total {
+            padding-top: 0.3cm;
+        }
+
+        .searchtype {
+            margin-left: 10cm;
+        }
+
+        #ndp-nepali-box {
+            width: 300px;
+        }
+
+        #ndp-table table{
+            width: 100%;
+        }
+
+
+
+            {
+            %endblock%
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="new">
+        <form method='POST' action="sales">
+            {%csrf_token%}
+            <h2>Add Sales</h2>
+            <div class="table">
+                <table class="same">
+                    <tr>
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            <input type="text"  name="date2"required="required" id="date_picker" data-hidden="true" placeholder="Enter date">
+                        </td>
+                        <td>Customer name</td>
+                        <td><input type="text" name="cname"></td>
+                        <td>Phone</td>
+                        <td><input type="number" name="cphone"></td>
+                        <td>Address</td>
+                        <td><input type="text" name="caddress"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Product Name
+                        </td>
+                        <td>
+                            <input list="products" name="product" id="product" required="required">
+                       
+                            <datalist name="product" id="products">
+                            {%for obje in obj%}
+                                    <option value="{{obje.Product}}">{{obje.Product}}</option>
+                                {%endfor%}
+                            </datalist>
+                        </td>
+                        <td>Quantity </td>
+                        <td><input type="number" name="quantity" id="quantity" required="required" oninput=ratess()>
+                            <div class="mes">{{message}}</div>
+                        </td>
+                        <td>Rate</td>
+                        <td><input type="number" name="rate" id="rate" required="required" oninput="ratess()"></td>
+                        <td>Discount</td>
+                        <td><input type="number" name="discount" id="discount" value=0 oninput='ratess()'></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td><input type="text" name="total" id="totals" required="required"></td>
+                        <td>Paid</td>
+                        <td><input type="text" name="paid" id='paids' required="required" oninput="calc()"></td>
+                        <td>Due left</td>
+                        <td><input type="text" name="dueleft" id="lefts" required="required"></td>
+
+                        <td colspan="2"> <button>Add Sales</button></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    {%endblock%}
+    <!-- for table -->
+    <div class="new">
+        <h3 class="title">Sales</h3>
+        <div class="searchsale">
+            <form method='POST' action='searchsale'>
+                {%csrf_token%}
+
+                <span>Showing {{start}} to {{end}} of {{count}} entries.</span>
+
+                <select name="searchtype" class="searchtype">
+                    <option>Date</option>
+                    <option>Customer Name</option>
+                    <option>Product</option>
+                </select>
+                <input class="searchfield" type="text" name="findtext" placeholder="Search Sales..."
+                    required="required">
+                <button>Search</button>
+
+        </div>
+        <table border="1" cellspacing=0>
+            <thead>
+                <tr>
+
+                    <th>Date<a class="arr" href="datedescendingorder">↑</a><a class="arr"
+                            href="dateincreasingorder">↓</a></th>
+                    <th>Customer Name<a class="arr" href="cssalesd">↑</a><a class="arr" href="cssalesi">↓</a></th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Product<a class="arr" href="productdescenedingordersales">↑</a><a class="arr"
+                            href="productincreasingordersales">↓</a></th>
+                    <th>Quantity<a class="arr" href="quantitydescenedingordersales">↑</a><a class="arr"
+                            href="quantityincreasingordersales">↓</a></th>
+                    <th>Rate<a class="arr" href="ratedescenedingordersales">↑</a><a class="arr"
+                            href="rateincreasingordersales">↓</a></th>
+                    <th>Discount<a class="arr" href="discountdescenedingordersales">↑</a><a class="arr"
+                            href="discountincreasingordersales">↓</a></th>
+                    <th>Total<a class="arr" href="totaldescenedingordersales">↑</a><a class="arr"
+                            href="totalincreasingordersales">↓</a></th>
+                    <th>Paid<a class="arr" href="paiddescenedingordersales">↑</a><a class="arr"
+                            href="paidincreasingordersales">↓</a></th>
+                    <th>Remaining Amount<a class="arr" href="remaindescenedingordersales">↑</a><a class="arr"
+                            href="remainincreasingordersales">↓</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for obj in data%}
+                <tr>
+
+                    <td>{{obj.Date}}</td>
+                    <td>{{obj.Customer_name}}</td>
+                    <td>{{obj.Customer_phone}}</td>
+                    <td>{{obj.Customer_address}}</td>
+                    <td>{{obj.Product}}</td>
+                    <td>{{obj.Quantity}}</td>
+                    <td>{{obj.Rate}}</td>
+                    <td>{{obj.Discount}}</td>
+                    <td>{{obj.Total}}</td>
+                    <td>{{obj.Paid}}</td>
+                    <td>{{obj.Due_left}}</td>
+                </tr>
+                {%endfor%}
+
+            </tbody>
+        </table>
+    </div>
+    <!-- for pagination and total. -->
+    <div class="new">
+        <div class="allall">
+            <h3 class="total">Total sale {{totalsale}}</h3>
+            <h3 class="credit">Total Credit {{totalcredit}}</h3>
+            <div class="pagination">
+
+                <span class="step-links">
+                    {% if data.has_previous %}
+                    <a href="?page={{ data.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    <span class="current"> Page {{ data.number }} of {{ data.paginator.num_pages }}. </span>
+                    {% if data.has_next %}
+                    <a href="?page={{ data.next_page_number }}">Next</a>
+                    {% endif %} </span>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <script src="{% static 'date_picker/js/nepali.datepicker.v3.7.min.js'%}"></script>
+
+    <script>
+
+        var mainInput = document.getElementById("date_picker");
+
+        /* Initialize Datepicker with options */
+        mainInput.nepaliDatePicker();
+
+    </script>
+</body>
+
+</html>

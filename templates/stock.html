@@ -1,0 +1,280 @@
+{%include 'index.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Stock{%endblock%}</title>
+    	<script src="https://unpkg.com/htmx.org@1.5.0"></script>
+
+    <style>
+    {%block style%}
+    *{
+        margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: cursive;
+        overflow-y:hidden;
+    }
+    .same{
+            border:1px solid #0001;
+            background-color:#FFFFE0;
+            padding: .5em 1em;
+            width: fit-content;
+    }
+        .main{
+            padding-top:20px;
+        
+            display:flex;
+            
+        }
+        .tquantity{
+            padding-left:60px;
+        }
+        .lquantity{
+            padding-left:30px;
+        }
+        .cpsp{
+            padding-top:20px;
+            
+            display:flex;
+        }
+        
+        .sp{
+            padding-left:40px;
+        }
+        .add{
+            padding-left:40px;
+        }
+        button{
+            width:30px;
+            background-color:#0000FF;
+            height:0.8cm;
+            width:3cm;
+            color:#fff;
+            border-radius:10cm;
+            border:none;
+        }
+        button:hover{
+            background-color:#0000CD;
+        }
+        .tit{
+            border:1px solid #FFFFE0;
+        }
+        h3{
+            padding-top:10px;
+            padding-left:12.5cm;
+        }
+        .fortable{
+                height:9cm;
+        }
+        table{
+            margin-top: 10px;
+            width:29cm;
+            border-collapse: collapse;
+            
+            
+        }
+        .all{
+            display:flex;
+            
+
+        }
+        .total{
+            padding-top: 20px;
+
+        }
+        .leftquantity{
+            padding-top: 20px;
+            padding-left:230px;
+        }
+        tr{
+            height:1cm;
+            text-align: center;
+        }
+        .pagination{
+        padding-top: 20px;
+        padding-left: 200px;
+        font-size:larger;
+        }
+        th{
+            background-color:salmon;
+        }
+        thead tr th {
+            color: #220;
+        }
+        tbody tr:nth-child(even){
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd){
+            background-color: #f7f7f7;
+    
+        }
+        .in-but{
+            outline: none;
+            border:1px solid #0002;
+            padding: .3rem .7rem;
+           }
+           .box{
+               display: flex;
+           }
+           .pagi{
+               text-align: left;
+           }
+           .box2{
+            border-radius: 14cm;
+            text-align: center;
+            outline: none;
+            
+           }
+           .padd{
+               padding-left: 38%;
+               padding-top:10px;
+           }
+           .arr{
+           color:black;
+           text-decoration:none;
+           margin-left: 2px;;
+       }
+       .arr:active{
+            color:white;
+       }
+       .export{
+           margin-left:340px;
+           color:blue;
+       }
+       
+    {%endblock%}
+    </style>
+</head>
+<body>
+    {%block content%}
+    <div class="new">
+    <h1>Add Items</h1>
+    
+    <div>
+    <form method='POST' action='stock'>
+        {%csrf_token%}
+    <div class="same">
+    <div class="main">
+        <div class="product">
+            <label>Product Name</label>
+            <input class="in-but" list="product" name="product" required="required">
+            <datalist name="product">
+                <option>Motul 1 litre</option>
+                <option>Congratulations</option>
+                <option>ONO</option>
+            </datalist>
+        </div>
+
+        <div class="tquantity">
+            <label>Total Quantity</label>
+            <input class="in-but" type="number" name="totquan" required="required">
+        </div>
+
+        <div class="lquantity">
+            <label>Left Quantity</label>
+            <input class="in-but" type="number" name="leftquan" required="required"> 
+        </div>
+      </div>
+      <div class="cpsp">
+        <div class="cp">
+            <label>Cost Price</label>
+            <input class="in-but" type="number" name="cp" required="required">
+        </div>
+        <div class="sp">
+            <label>Selling Price</label>
+            <input  class="in-but" type="number" name="sp">
+        </div>
+        <div class="add">
+            <button>Add</button>
+        </div>
+        </div>  
+        </div>  
+    </form>
+      <!-- for table data.... -->
+      <div class="tit">
+      <form method="POST" action="excelstock">
+      {%csrf_token%}
+          <h3>Product Details<input type="submit" class="export" value="Export to Excel"></h3></form>
+          <div class="serch">
+              <form method='POST' action='search' htmx-post='search'>
+                  {%csrf_token%}
+                  <div class="box">
+                      <div class="pagi">
+                        <h4>Showing {{start}} to {{end }} of {{count}} entries</h4>
+                        </div>
+                        <div class="padd">
+                        <input class="box2" type="text" name="findtext" hx-post="search" hx-trigger="keyup" placeholder="Search...">
+              <button>Search</button>
+              </div>
+                          
+                      
+                  </div>
+                <!-- <div class="box">
+                    <div class="headin">
+                <h3>Page 1 of 1</h3>
+                    </div>
+              <input class="box2" type="text" name="findtext" placeholder="Search...">
+              <button>Search</button> -->
+              </div>
+              </form>
+          </div>
+          </div>
+
+          <div class="fortable">
+              <table border="1" cellspacing=0 >
+                  <thead>
+                      <tr>
+                          <th>Product Name<a class ="arr" href="productdescenedingorder">↑</a><a class="arr" href="productincreasingorder">↓</a></th>
+                          <th>Total Quantity<a class ="arr" href="quantitydecreasingorder">↑</a><a class="arr" href="quantityincreasingorder">↓</a></th>
+                          <th>Quantity Left<a class ="arr" href="leftquantitydecreasingorder">↑</a><a class="arr" href="leftquantityincreasingorder">↓</a></th>
+                          {% comment %} <th>Cost Price<a class ="arr" href="cpdecreasingorder">↑</a><a class="arr" href="cpincreasingorder">↓</a></th> {% endcomment %}
+                          <th>Selling Price<a class ="arr" href="spdecreasingorder">↑</a><a class="arr" href="spincreasingorder">↓</a></th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      {%for obj in data%}
+                      <tr>
+                          <td>{{obj.Product|capfirst}}</td>
+                          <td>{{obj.Total|capfirst}}</td>
+                          <td>{{obj.Left|capfirst}}</td>
+                          {% comment %} <td>{{obj.Cost}}</td> {% endcomment %}
+                          <td>{{obj.Sold}}</td>
+                      </tr>
+                    {%endfor%}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    
+    </div>
+   <div class="new">
+       <div class="all">
+       <div class="total">
+           <h2>Total Quantity {{total_quantity}}</h2>
+       </div>
+       <div class="leftquantity">
+           <h2>Left Quantity {{Left_quantity}}</h2>
+       </div>
+
+    <div class="pagination"> 
+         <span class="step-links">
+                 {% if data.has_previous %}     
+                  <a href="?page={{ data.previous_page_number }}">Previous</a> 
+                     {% endif %}  
+                       <span class="current">      Page {{ data.number }} of {{ data.paginator.num_pages }}.    </span>  
+                         {% if data.has_next %}  
+                             <a href="?page={{ data.next_page_number }}">Next</a>    
+                             {% endif %}  </span>
+                             </div> 
+                             </div>
+                             </div>
+    {%endblock%}
+                            
+</body>
+</html>

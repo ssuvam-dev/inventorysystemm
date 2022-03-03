@@ -1,0 +1,195 @@
+{%include 'index.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Credit{%endblock%}</title>
+    <script>
+    function upvalue(a){
+        alert(a)
+    }
+    </script>
+    <style type="text/css">
+    tr{
+        padding-top: 10px;
+    }
+    td{
+        padding-top:10px;
+        padding-left: 5px;
+    }
+    .same{
+            border:1px solid #0001;
+            background-color:#FFFFE0;
+            padding: .5em 1em;
+            width:40%;
+    }
+    button{
+            width:30px;
+            background-color:#0000FF;
+            height:0.8cm;
+            width:3cm;
+            color:#fff;
+            border-radius:10cm;
+            border:none;
+        }
+        button:hover{
+            background-color:#0000CD;
+        }
+        .title{
+            padding-left:12cm;
+        }
+        .searchsale{
+            display:flex;
+        }
+        .searchfield{
+            border-radius: 14cm;
+            text-align: center;
+            outline: none;
+        }
+        .searchtype{
+            margin-left:14cm;
+        }
+        th{
+            width:100px;
+            
+        }
+        table{
+            margin-top: 10px;
+            width:29cm;
+            border-collapse: collapse;
+            text-align:center;
+        }
+        th{
+            background-color:salmon;
+        }
+        thead tr th {
+            color: #220;
+            text-align:center;
+        }
+        tbody tr:nth-child(even){
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd){
+            background-color: #f7f7f7;
+    
+        }
+        .pagination{
+            padding-top:0.3cm;
+            padding-left: 5.3cm;
+            font-style:normal;
+            font-size:20px;
+
+        }
+        .mes{
+            color:red;
+            font-size: small;
+        }
+        .total{
+            margin-top:5px;
+            padding-left: 0%;
+            
+        }
+        .allall{
+            
+            display:flex;
+        }
+        .credit{
+            padding-top:0.3cm;
+            padding-left:7cm;
+        }
+        .total{
+            padding-top:0.3cm;
+        }
+       
+     .arr{
+           color:black;
+           text-decoration:none;
+           margin-left: 2px;;
+       }
+       .arr:active{
+            color:white;
+       }
+    </style>
+</head>
+<body>
+    {%block content%}
+    <div class="new">
+            <h3 class="title">Credit</h3>
+            <div class="searchsale">
+                <form method='POST' action='searchcredit'>
+                    {%csrf_token%}
+                    <h3>Showing {{start}} to {{end}} of {{count}} entries.</h3>
+                    <select name="searchtype" class="searchtype">
+                        <option>Date</option>
+                        <option>Customer Name</option>
+                        <option>Product</option>
+                    </select>
+                <input class="searchfield" type="text" name="findtext" placeholder="Search Sales..." required="required">
+                <button >Search</button>
+                </form>
+                </div>
+                <table border="1" cellspacing=0>
+                    <thead>
+                       <tr>
+                        <th>Date <a class ="arr" href="creditdecreaseDate">↑</a><a class="arr" href="creditincreaseDate">↓</a></th>
+                        <th>Customer Name<a class ="arr" href="creditdecreaseCustomer_name">↑</a> <a class="arr" href="creditincreaseCustomer_name">↓</a></th>
+                        <th>Phone <a class ="arr" href="creditdecreaseCustomer_phone">↑</a><a class="arr" href="creditincreaseCustomer_phone">↓</a></th>
+                        <th>Address <a class ="arr" href="creditdecreaseCustomer_address">↑</a><a class="arr" href="creditincreaseCustomer_address">↓</a></th>
+                        <th>Product<a class ="arr" href="creditdecreaseProduct">↑</a><a class="arr" href="creditincreaseProduct">↓</a></th>
+                        <th>Quantity<a class ="arr" href="creditdecreaseQuantity">↑</a><a class="arr" href="creditincreaseQuantity">↓</a></th>
+                        <th>Rate<a class ="arr" href="creditdecreaseRate">↑</a><a class="arr" href="creditincreaseRate">↓</a></th>
+                        <th>Discount<a class ="arr" href="creditdecreaseDiscount">↑</a><a class="arr" href="creditincreaseDiscount">↓</a></th>
+                        <th>Total<a class ="arr" href="creditdecreaseTotal">↑</a><a class="arr" href="creditincreaseTotal">↓</a></th>
+                        <th>Paid<a class ="arr" href="creditdecreasePaid">↑</a><a class="arr" href="creditincreasePaid">↓</a></th>
+                        <th>Remaining Amount<a class ="arr" href="creditdecreaseDue_left">↑</a><a class="arr" href="creditincreaseDue_left">↓</a></th>
+                        <th>Menu</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                    {%for obj in data%}
+                        <tr>
+
+                            <td>{{obj.Date}}</td>
+                            <td>{{obj.Customer_name}}</td>
+                            <td>{{obj.Customer_phone}}</td>
+                            <td>{{obj.Customer_address}}</td>
+                            <td>{{obj.Product}}</td>
+                            <td>{{obj.Quantity}}</td>
+                            <td>{{obj.Rate}}</td>
+                            <td>{{obj.Discount}}</td>
+                            <td>{{obj.Total}}</td>
+                            <td>{{obj.Paid}}</td>
+                            <td>{{obj.Due_left}}</td>
+                            <td><a href="{{obj.id}}">Update</a></td>
+                           </tr>
+                           {%endfor%}
+                           
+                    </tbody>
+                </table>     
+                    </div>
+                    <!-- for pagination and total. -->
+                    <div class="new">
+                        <div class="allall">
+                        <h3 class="total">Total Amount  {{total}}</h3>
+                        <h3 class="credit">Total Remain {{remain}}</h3>
+                    <div class="pagination"> 
+                        
+                        <span class="step-links">
+                                {% if data.has_previous %}     
+                                 <a href="?page={{ data.previous_page_number }}">Previous</a> 
+                                    {% endif %}  
+                                      <span class="current">      Page {{ data.number }} of {{ data.paginator.num_pages }}.    </span>  
+                                        {% if data.has_next %}  
+                                            <a href="?page={{ data.next_page_number }}">Next</a>    
+                                            {% endif %}  </span>
+                                            </div> 
+                                            </div>
+                                            </div>
+        </div>
+    {%endblock%}
+</body>
+</html>

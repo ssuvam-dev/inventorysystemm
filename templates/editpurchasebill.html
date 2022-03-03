@@ -1,0 +1,218 @@
+
+{%include 'index.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Update{%endblock%}</title>
+    <script>
+    {%for obj in objec%}
+    var dat=document.getElementById('dat')
+    dat.value={{obj.Date}} 
+    {%endfor%}
+
+    </script>
+   
+    <style>
+    
+    *{
+        margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: cursive;
+    }
+    body{
+        overflow-y: hidden;
+    }
+    tr{
+        padding-top: 10px;
+    }
+    td{
+        padding-top:10px;
+        padding-left: 5px;
+    }
+    .same{
+        padding-top: 10px;
+            border:1px solid #0001;
+            background-color:#FFFFE0;
+            padding: .5em 1em;
+            width:80%;
+    }
+    button{
+            width:30px;
+            background-color:#0000FF;
+            height:0.8cm;
+            width:3cm;
+            color:#fff;
+            border-radius:10cm;
+            border:none;
+        }
+        button:hover{
+            background-color:#0000CD;
+        }
+        .title{
+            padding-left:12cm;
+        }
+        .pasal{
+            padding-left:4cm;
+        
+        }
+        code{
+            padding-left:12cm;
+        }
+        .dat{
+            float:right;
+        }
+        .forcus{
+            display:flex;
+
+        }
+        .nameap{
+            padding-left: 15cm;
+        }
+        th{
+            width:100px;
+            
+        }
+        table{
+            margin-top: 10px;
+            width:28cm;
+            border-collapse: collapse;
+            text-align:center;
+        }
+        th{
+            background-color:salmon;
+        }
+        thead tr th {
+            color: #220;
+            text-align:center;
+        }
+        tbody tr:nth-child(even){
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd){
+            background-color: #f7f7f7;
+    
+        }
+        .finali{
+        
+            background-color:#FFFFE0;
+        }
+        h3{
+            padding-left:23cm;
+            color:rgb(94, 94, 94);
+        }
+        .inbox{
+            padding-left: 20.4cm;
+            padding-top:9px;
+        }
+        .in{
+            outline:none;
+            border-radius: 2cm;
+            text-align:center;
+        }
+        .second{
+            display:flex;
+            padding-left: 0%;
+            padding-top: 10px;
+        }
+        .frit{
+            padding-top: 10px;
+            padding-left: 21cm;
+        }
+        
+    
+    </style>
+</head>
+<body>
+    
+    <div class="new">
+    
+            {%csrf_token%}
+            
+            <h2 >Bill  of  {{cname}}</h2>
+           <div class="same">
+               <h1 class="pasal">{{cname}}</h1>
+               <code>{{cadd}}</code>
+               <p class="dat">Date : {{date}}</p>
+               <div class="forcus">
+                   <div class="namec">
+                       Customer Name: Sushant Helmets Lubricants And Accessories zone
+                   </div>
+                   <div class="nameap">
+                    Customer Address: Pipera-11,Surkhet
+                </div>
+               </div>
+               <div>
+               <div class="phone">
+                   Phone : {{cphone}}
+               </div>
+               <div class="phone">
+                Pan:{%for data in pan%}
+                <input type="reset" value={{data}}>
+                {%endfor%}
+            </div>
+               </div>
+               <div class="fortable">
+                   <table border=1 cellspacing=0>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                            </tr>
+                            {%for obj in data%}
+                            <tr>
+                                <td>{{obj.Product}}</td>
+                                <td>{{obj.Quantity}}</td>
+                                <td>{{obj.Rate}}</td>
+                                <td>{{obj.Discount}}</td>
+                                <td>{{obj.Total}}</td>
+                            </tr>
+                            {%endfor%}
+
+                   </table>
+               
+                <div class="finali">
+                   <h3>Total :{{total}}</h3>
+                   <h3>Discount :{{discount}}</h3>
+                   <h3>Vat :{{vat}}%</h3><br>
+                   <h3>Net Total :{{ntotal}}</h3>
+                   <h3>Paid :{{amnt}}</h3>
+                   <h3>Due Left :{{due_left}}</h3>
+                   
+               </div>
+               <h5>**Goods once sold will not be returned**</h5>
+               <div class="pagination"> 
+         <span class="step-links">
+                 {% if data.has_previous %}     
+                  <a href="?page={{ data.previous_page_number }}">Previous</a> 
+                     {% endif %}  
+                       <span class="current">      Page {{ data.number }} of {{ data.paginator.num_pages }}.    </span>  
+                         {% if data.has_next %}  
+                             <a href="?page={{ data.next_page_number }}">Next</a>    
+                             {% endif %}  </span>
+                             </div> 
+                             </div>
+                             </div>
+           </div>
+           </div>
+           <div class="inbox">
+            <form method="POST" action="updatebills{{id}}" >
+                   {%csrf_token%}
+                <input class="in"type="number" placeholder="new amount" name="newamnt" required="required">
+                <button>Update</button>
+            </form>
+       
+
+       
+            
+    
+                         
+</body>
+</html>

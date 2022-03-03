@@ -1,0 +1,289 @@
+{%load static%}
+{%include 'index.html'%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Saving{%endblock%}</title>
+    <link rel="stylesheet" href="{%static 'date_picker\css\nepali.datepicker.v3.7.min.css'%}">
+    <style>
+    {%block style%}
+    *{
+        margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: cursive;
+    }
+    .same{
+            border:1px solid #0001;
+            background-color:#FFFFE0;
+            padding: .5em 1em;
+            width: fit-content;
+    }
+        .main{
+            padding-top:20px;
+        
+            display:flex;
+            
+        }
+        .tquantity{
+            padding-left:60px;
+        }
+        .lquantity{
+            padding-left:30px;
+        }
+        .cpsp{
+            padding-top:20px;
+            
+            display:flex;
+        }
+        
+        .cp{
+            padding-left:40px;
+        }
+        .add{
+            padding-left:920px;
+        }
+        button{
+            width:30px;
+            background-color:#0000FF;
+            height:0.8cm;
+            width:3cm;
+            color:#fff;
+            border-radius:10cm;
+            border:none;
+            
+        }
+        button:hover{
+            background-color:#0000CD;
+        }
+        .tit{
+            border:1px solid #FFFFE0;
+        }
+        h3{
+            padding-top:10px;
+            padding-left:12.5cm;
+        }
+        .fortable{
+                height:9cm;
+        }
+        table{
+            margin-top: 10px;
+            width:29cm;
+            border-collapse: collapse;
+            
+            
+        }
+        
+        #ndp-nepali-box {
+            width: 300px;
+        }
+
+        #ndp-table table{
+            width: 100%;
+        }
+
+
+        .all{
+            display:flex;
+            
+
+        }
+        .total{
+            padding-top: 20px;
+
+        }
+        .leftquantity{
+            padding-top: 20px;
+            padding-left:230px;
+        }
+        tr{
+            height:1cm;
+            text-align: center;
+        }
+        .pagination{
+        padding-top: 20px;
+        padding-left: 200px;
+        font-size:larger;
+        }
+        th{
+            background-color:salmon;
+        }
+        thead tr th {
+            color: #220;
+        }
+        tbody tr:nth-child(even){
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd){
+            background-color: #f7f7f7;
+    
+        }
+        .in-but{
+            outline: none;
+            border:1px solid #0002;
+            padding: .3rem .7rem;
+           }
+        .in-buts{
+            outline: none;
+            border:1px solid #0002;
+            padding: .3rem .7rem;
+            width:300px;
+           }
+           .box{
+               display: flex;
+           }
+           .pagi{
+               text-align: left;
+           }
+           .box2{
+            border-radius: 14cm;
+            text-align: center;
+            outline: none;
+            
+           }
+           .padd{
+               padding-left:35%;
+           }
+           .arr{
+           color:black;
+           text-decoration:none;
+           margin-left: 2px;;
+       }
+       .arr:active{
+            color:white;
+       }
+       
+    {%endblock%}
+    </style>
+</head>
+<body>
+    {%block content%}
+    <div class="new">
+    <h1>Add Saving</h1>
+    
+    <div>
+    <form method='POST' action='save'>
+        {%csrf_token%}
+    <div class="same">
+    <div class="main">
+        <div class="product">
+            <label>Date</label>
+            <input type="text" name="date"required="required" id="date_picker" data-hidden="true" class="in-but" placeholder="Enter date">
+            
+        </div>
+
+        <div class="tquantity">
+            <label>Financial Institution</label>
+            <input class="in-buts" type="text" name="purpose" required="required">
+        </div>
+    <div class="cp">
+            <label>Amount</label>
+            <input class="in-but" type="number" name="amount" required="required">
+        </div>
+        
+        
+        
+      </div>
+      <div class="cpsp">
+        <div class="add">
+            <button>Add</button>
+        </div>
+        </div>  
+        </div>  
+    </form>
+      <!-- for table data.... -->
+      <div class="tit">
+          <h3>Saving Details</h3>
+          <div class="serch">
+              <form method='POST' action='searchsave'>
+                  {%csrf_token%}
+                  <div class="box">
+                      <div class="pagi">
+                        <h4>Showing {{start}} to {{end}} of {{count}} entries.</h4>
+                        </div>
+                        <div class="padd">
+                        <select name="searchtype">
+                        <option>Date</option>
+                        <option>Bank</option>
+                    </select>
+                        <input class="box2" type="text" name="findtext" required="required" placeholder="Search...">
+              <button>Search</button>
+              </div>
+                          
+                      
+                  </div>
+                <!-- <div class="box">
+                    <div class="headin">
+                <h3>Page 1 of 1</h3>
+                    </div>
+              <input class="box2" type="text" name="findtext" placeholder="Search...">
+              <button>Search</button> -->
+              </div>
+              </form>
+          </div>
+          </div>
+
+          <div class="fortable">
+              <table border="1" cellspacing=0 >
+                  <thead>
+                      <tr>
+                          <th>Date<a class ="arr" href="decreasedatesave">↑</a><a class="arr" href="increasedatesave">↓</a></th>
+                          <th>Financial Institution<a class ="arr" href="decreasefsave">↑</a><a class="arr" href="increasefsave">↓</a></th>
+                          <th>Amount<a class ="arr" href="decreaseamountsave">↑</a><a class="arr" href="increaseamountsave">↓</a></th>
+                         
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      {%for obj in data%}
+                      <tr>
+                          <td>{{obj.Date}}</td>
+                          <td>{{obj.Bank|capfirst}}</td>
+                          <td>{{obj.Amount}}</td>
+                          
+                      </tr>
+                    {%endfor%}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    
+    </div>
+   <div class="new">
+       <div class="all">
+       <div class="total">
+           <h2>Total Saving {{total}}</h2>
+       </div>
+       
+    <div class="pagination"> 
+         <span class="step-links">
+                 {% if data.has_previous %}     
+                  <a href="?page={{ data.previous_page_number }}">Previous</a> 
+                     {% endif %}  
+                       <span class="current">      Page {{ data.number }} of {{ data.paginator.num_pages }}.    </span>  
+                         {% if data.has_next %}  
+                             <a href="?page={{ data.next_page_number }}">Next</a>    
+                             {% endif %}  </span>
+                             </div> 
+                             </div>
+                             </div>
+                              <script src="{% static 'date_picker/js/nepali.datepicker.v3.7.min.js'%}"></script>
+
+    <script>
+
+        var mainInput = document.getElementById("date_picker");
+
+        /* Initialize Datepicker with options */
+        mainInput.nepaliDatePicker();
+
+    </script>
+    {%endblock%}
+                            
+</body>
+</html>

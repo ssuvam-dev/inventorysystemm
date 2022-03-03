@@ -1,0 +1,300 @@
+{%load static%}
+{%include 'index.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Purchasebill{%endblock%}</title>
+    <link rel="stylesheet" href="{%static 'date_picker\css\nepali.datepicker.v3.7.min.css'%}">
+    <style>
+    {%block style%}
+    *{
+        margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: cursive;
+        overflow-y:hidden;
+    }
+    .same{
+            border:1px solid #0001;
+            background-color:#FFFFE0;
+            padding: .5em 1em;
+            width: fit-content;
+    }
+        .main{
+            padding-top:20px;
+            display:flex;
+            
+        }
+        .tquantity{
+            padding-left:60px;
+        }
+        .lquantity{
+            padding-left:30px;
+        }
+        .cpsp{
+            padding-top:20px;
+            
+            display:flex;
+        }
+        
+        .sp{
+            padding-left:40px;
+        }
+        .add{
+            padding-left:600px;
+        }
+        button{
+            width:30px;
+            background-color:#0000FF;
+            height:0.8cm;
+            width:3cm;
+            color:#fff;
+            border-radius:10cm;
+            border:none;
+        }
+        button:hover{
+            background-color:#0000CD;
+        }
+        .tit{
+            border:1px solid #FFFFE0;
+        }
+        h3{
+            padding-top:10px;
+            padding-left:12.5cm;
+        }
+        .fortable{
+                height:9cm;
+        }
+        table{
+            margin-top: 10px;
+            width:29cm;
+            border-collapse: collapse;
+            
+            
+        }
+        .all{
+            display:flex;
+            
+
+        }
+        .total{
+            padding-top: 20px;
+
+        }
+        .leftquantity{
+            padding-top: 20px;
+            padding-left:230px;
+        }
+        tr{
+            height:1cm;
+            text-align: center;
+        }
+        .pagination{
+        padding-top: 6px;
+        padding-left: 22cm;
+        font-size:larger;
+        }
+        th{
+            background-color:salmon;
+        }
+        thead tr th {
+            color: #220;
+        }
+        tbody tr:nth-child(even){
+            background-color: #f8dcf7;
+
+        }
+
+        tbody tr:nth-child(odd){
+            background-color: #f7f7f7;
+    
+        }
+        .in-but{
+            outline: none;
+            border:1px solid #0002;
+            padding: .3rem .7rem;
+            padding-left: 10px;
+           }
+           .box{
+               display: flex;
+           }
+           .pagi{
+               text-align: left;
+           }
+           .box2{
+            border-radius: 14cm;
+            text-align: center;
+            outline: none;
+            
+           }
+           .padd{
+               padding-left: 38%;
+           }
+           .date{
+               padding-right:108px;
+           }
+       
+       .arr{
+           color:black;
+           text-decoration:none;
+           margin-left: 2px;;
+       }
+       .arr:active{
+            color:white;
+       }
+            #ndp-nepali-box {
+            width: 300px;
+        }
+
+        #ndp-table table{
+            width: 100%;
+        }
+    {%endblock%}
+    </style>
+</head>
+<body>
+    {%block content%}
+    <div class="new">
+    <h1>Add Bills</h1>
+    
+    <div>
+    <form method='POST' action='purchasebilltemplate'>
+        {%csrf_token%}
+    <div class="same">
+    <div class="main">
+        <div class="date">
+            <label for="">Date</label>
+            <input type="text" name="date" required="required" id="date_picker" data-hidden="true" placeholder="Enter date">
+        </div>
+        <div class="product">
+            <label>Company Name</label>
+            <input class="in-but" name="cname" required="required">
+            
+        </div>
+        <div class="tquantity">
+            <label>PAN</label>
+            <input class="in-but" type="number" name="pan" >
+        </div>
+
+        
+        </div>
+        <div class="main">
+        <div class="">
+            <label>Address</label>
+            <input class="in-but" type="text" name="caddress">
+        </div>
+        <div class="tquantity">
+            <label>Phone</label>
+            <input class="in-but" type="number" name="cphone">
+        </div>
+        <div class="tquantity">
+            <label>VAT</label>
+            <input class="in-but" type="number" name="vat" value=0 required="required">
+        </div>
+        </div>
+        <div class="main">
+        <div>
+            <label>Amount Paid</label>
+            <input class="in-but" type="text" name="paid" required="required">
+        </div>
+        <div class="add">
+            <button>Add</button>
+        </div>
+        
+        </div>  
+        </div>  
+    </form>
+    {%endblock%}
+
+       
+      <!-- for table data.... -->
+      <div class="tit">
+          <h3>Bills</h3>
+          <div class="serch">
+              <form method='POST' action='searchpb'>
+                  {%csrf_token%}
+                  <div class="box">
+                      <div class="pagi">
+                        <h4>Showing {{start}} to {{end}} of {{count}} entries</h4>
+                        </div>
+                        <div class="padd">
+                        <input class="box2" type="text" name="findtext" placeholder="Search...">
+              <button>Search</button>
+              </div>
+                          
+                      
+                  </div>
+                <!-- <div class="box">
+                    <div class="headin">
+                <h3>Page 1 of 1</h3>
+                    </div>
+              <input class="box2" type="text" name="findtext" placeholder="Search...">
+              <button>Search</button> -->
+              </div>
+              </form>
+          </div>
+          </div>
+
+          <div class="fortable">
+              <table border="1" cellspacing=0 >
+                  <thead>
+                      <tr>
+                      <th>Date<a class ="arr" href="datei">↑</a><a class="arr" href="dated">↓</a></th>
+                          <th>Suppliers Name<a class ="arr" href="cd">↑</a><a class="arr" href="ci">↓</a></th>
+                          <th>Phone</th>
+                          <th>Paid<a class ="arr" href="paidi">↑</a><a class="arr" href="paidd">↓</a></th>
+                          <th>Status</th>
+                          
+                          <th>Menu</th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      {%for obj in data%}
+                      <tr>
+                          <td>{{obj.Date|capfirst}}</td>
+                          <td>{{obj.Company_name|capfirst}}</td>
+                          <td>{{obj.Customer_phone|capfirst}}</td>
+                          <td>{{obj.Paid}}</td>
+                         <td>Paid</td>
+                          <td><a href="viewbill{{obj.id}}">View</a>
+                          <a href="editbills{{obj.id}}">Edit</a>
+                          </td>
+                      </tr>
+                    {%endfor%}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    
+    </div>
+   <div class="new">
+       
+    <div class="pagination"> 
+         <span class="step-links">
+                 {% if data.has_previous %}     
+                  <a href="?page={{ data.previous_page_number }}">Previous</a> 
+                     {% endif %}  
+                       <span class="current">      Page {{ data.number }} of {{ data.paginator.num_pages }}.    </span>  
+                         {% if data.has_next %}  
+                             <a href="?page={{ data.next_page_number }}">Next</a>    
+                             {% endif %}  </span>
+                             </div> 
+                             </div>
+                             </div>
+                             <script src="{% static 'date_picker/js/nepali.datepicker.v3.7.min.js'%}"></script>
+
+    <script>
+
+        var mainInput = document.getElementById("date_picker");
+
+        /* Initialize Datepicker with options */
+        mainInput.nepaliDatePicker();
+
+    </script>
+             
+</body>
+</html>

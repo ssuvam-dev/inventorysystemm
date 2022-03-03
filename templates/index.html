@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{% comment %} <title>{%block title%} Navigation bar {%endblock%}</title> {% endcomment %}
+	<!-- boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<script src="https://unpkg.com/htmx.org@1.5.0"></script>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: cursive;
+
+	} 
+	body{
+		position: relative;
+		min-height: 100vh;
+		width: 100%;
+		overflow-x:hidden;
+		
+			}
+			.sidebar{
+				position: fixed;
+				top:0;
+				left: 0;
+				height: 100%;
+				width: 250px;
+				background: #11101d;
+			    padding: 4px 5px;
+			}
+			.sidebar.logos.logo{
+				color: green;
+				display: flex;
+				height: 50px;
+				
+				align-items: center;
+			}
+			.logos.logo i{
+				font-size: 28px;
+				margin-right: 5px;
+
+			}
+			.logos.logo.logoside{
+				font-size: 20px;
+				font-weight: 400;
+			}
+			.sidebar #btn{
+				position: absolute;
+				color: #fff;
+				left: 90%;
+				top: 6px;
+				font-size: 20px;
+				height: 50px;
+				width: 50px;
+				line-height: 60px;
+				align-items: center;
+			}
+			.sidebar ul{
+				margin-top: 20px;
+			}
+			.sidebar ul li{
+				position: relative;
+				list-style: none;
+				line-height: 50px;
+				
+				height: 50px;
+				margin: 0 5px;
+			}
+			.sidebar ul li a{
+				color:#fff;
+				padding-left:10px;
+				display: flex;
+				align-items: center;
+				text-decoration: none;
+				transition: all 0.4s ease;
+				border-radius: 12px;
+                
+           }
+           .sidebar ul li a:hover{
+           	color: #11101d;
+           	background: #FFACDF;;
+           }
+           
+           .sidebar ul li a i{
+           	height: 50px;
+           	min-wdith: 50px;
+           	border: 12px;
+           	line-height: 50px;
+           	text-align: center;
+			padding-right:10px;
+
+           }
+           .hello{
+               word-wrap: normal;
+               font-size: large;
+               color:#FFACDF;
+               padding-left:20px;
+               padding-bottom: 10px;
+            
+           }
+		   .foot{
+			   
+			   padding-left:59px;
+			   padding-top:60px;
+		   }
+		   .name{
+			   color:#FFACDF;
+		   }
+		   .business{
+			   padding-left:13px;
+			   
+		   }
+		   {%block styles%}
+		   hr:not(hr.divider){
+			   background-color:#FFACDF;
+			   height:3px;
+		   }
+		   {%endblock%}
+		   .new{
+			   
+			   position:relative;
+			   left:260px;
+		   }
+		   .footer{
+			   text-align: center;
+			   background-color: rgb(5, 1, 1);
+			   color:whitesmoke;
+			   
+		   }
+	
+</style>
+</head>
+<body>
+
+	<div class="sidebar">     
+<ul class="logos">
+	
+		
+			
+			<p class="hello">Sushant Helmets Zone</p>
+			<hr>
+            
+		
+		<!-- <span class="links">Dashboard</span> -->
+		
+    
+
+		<li>
+		<a href="/" htmx-get="/">
+			<i class='bx bx-grid-alt' ></i>
+			<span class="linksname">Dashboard</span>
+		</a>
+		
+		</a>
+	</li>
+    <li>
+		<a href="stock" htmx-get="stock">
+		<i class='bx bx-cog' ></i>
+			<span class="linksname">Stock</span>
+		</a>
+		
+	</li>
+	<li>
+		<a href="sales">
+		<i class='bx bx-cog' ></i>
+			<span class="linksname">Sales</span>
+		</a>
+		
+	</li>
+
+	<li>
+		<a href="sales-bill">
+			<i class='bx bx-user'></i>
+			<span class="linksname">Sales Bill</span>
+		</a>
+		
+	</li>
+	<li>
+		<a href="saving">
+			<i class='bx bx-first-page'></i>
+			<span class="linksname">Saving</span>
+		</a>
+
+		</a>
+	</li>
+	</li>
+	<li>
+		<a href="purchase-bill">
+			<i class='bx bx-message-alt-check' ></i>
+			<span class="linksname">Purchase Bills</span>
+		</a>
+		
+		</a>
+	</li>
+	<li>
+		<a href="credit">
+			<i class='bx bx-store-alt'></i>
+			<span class="linksname"> Credit</span>
+			
+		</a>
+		
+
+	</li>
+	<li>
+		<a href="expense">
+			<i class='bx bx-cart' ></i>
+			<span class="linksname"> Expenses</span>
+			
+		</a>
+		
+
+	</li>
+
+	
+    <li>
+		<a href="report">
+			<i class='bx bx-phone' ></i>
+			<span class="linksname">Report</span>
+		</a>
+	
+	</li>
+    
+</ul>
+
+<hr>
+<div class="foot">
+    <div class="name">
+        Subham Sharma
+        <div class="business">
+            Business Man
+        </div>
+		
+    </div>
+	
+
+</div></div>
+<div class="new">
+
+</div>
+
+
+</body>
+</html>

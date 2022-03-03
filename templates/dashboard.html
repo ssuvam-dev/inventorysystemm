@@ -1,0 +1,308 @@
+{%load static%}
+{%include 'index.html'%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Dash Board {%endblock%}</title>
+    <style>
+        :root {
+            --sales-color: #39bfab;
+            --sales-color-dark: #1f9987;
+            --purchase-color: #336fb8;
+            --purchase-color-dark: #154c8f;
+            --expense-color: #6545bf;
+            --expense-color-dark: #3e218f;
+            --saving-color: #32b869;
+            --saving-color-dark: #188f49;
+            --product-box-color: #59afba;
+            --product-box-color-dark: #28a5b5;
+            --credit-box-color: #3d3bd4;
+            --credit-box-color-dark: #252fc0;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .container {
+            width: 1080px;
+            height: 100vh;
+            overflow-y: hidden;
+            margin-left: 10px;
+            padding: 2em 3em;
+        }
+
+        .container .top-data .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container .top-data .flex-container .flex-item {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            width: 200px;
+            padding: .7rem 1rem;
+            border-radius: 10px;
+        }
+
+        .container .top-data .flex-container .flex-item img {
+            width: 30px;
+            height: auto;
+
+        }
+
+        .container .top-data .flex-container .flex-item .data-content h5 {
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .container .top-data .flex-container .sales-box {
+            background: linear-gradient(to right, var(--sales-color), var(--sales-color-dark));
+            color: #fff;
+        }
+
+        .container .top-data .flex-container .purchase-box {
+            background: linear-gradient(to right, var(--purchase-color), var(--purchase-color-dark));
+            color: #fff;
+        }
+
+        .container .top-data .flex-container .expense-box {
+            background: linear-gradient(to right, var(--expense-color), var(--expense-color-dark));
+            color: #fff;
+        }
+
+        .container .top-data .flex-container .saving-box {
+            background: linear-gradient(to right, var(--saving-color), var(--saving-color-dark));
+            color: #fff;
+        }
+
+        hr.divider {
+            margin: 1rem 0;
+            margin-top: 1.7rem;
+            background: rgb(170, 170, 170);
+            height: 1px;
+        }
+
+        .container .box-main {
+            width: 280px;
+            height: auto;
+            background: linear-gradient(120deg, var(--product-box-color), var(--product-box-color-dark));
+            margin-top: 1.5rem;
+            padding: .7rem 1rem;
+            border-radius: 7px;
+            color: #fff;
+            display: inline-block;
+        }
+
+        .container .box-main .box-heading h3{
+           font-size: 1.2rem;
+           margin-bottom: 1rem;
+        }
+
+        .container .box-main .box-inner .flex-item {
+            display: flex;
+            justify-content: space-between;
+            padding: .5rem 1rem;
+            margin: 7px 0rem;
+            background: rgb(107, 196, 226);
+            border-radius: 5px;
+        }
+
+        .container .box-main .box-inner .product-item .product-quantity {
+            min-width: 20px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: rgb(233, 84, 84);
+            font-size: .7rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: .2rem;
+        }
+
+        .container .box-main .box-inner .cred-item .cred-quantity {
+            min-width: 20px;
+            border-radius: 5px;
+            background: rgb(233, 84, 84);
+            font-size: .6rem;
+            text-align: center;
+            padding: .23rem;
+        }
+
+        .container .heighest-creditors {
+            margin-left: 1rem;
+            background: linear-gradient(120deg, var(--credit-box-color), var(--credit-box-color-dark));
+        }
+        .container .heighest-creditors .cred-item {
+            background: rgb(107, 119, 226) !important;
+        }
+
+        .popular-products {
+            width: 380px;
+            height: auto;
+            display: inline-block;
+            margin-left: 1rem;
+            background: linear-gradient(rgb(51, 187, 51), rgb(6, 153, 6));
+            margin-top: 1.5rem;
+            padding: .7rem 1rem;
+            border-radius: 7px;
+            color: #fff;
+        }
+        a{
+            text-decoration:none;
+            color:white;
+        }
+    </style>
+</head>
+
+<body>
+    {%block content%}
+    <div class="new">
+        <div class="container">
+            <div class="top-data">
+                <div class="top-data-container flex-container">
+                    <div class="flex-item sales-box">
+                        <div class="data-icon">
+                            <img src="{%static 'purchase.png'%}" alt="sales">
+                        </div>
+                        <div class="data-content">
+                            <div class="data-title">
+                                <h5>Total Sales</h5>
+                            </div>
+                            <div class="data-quantity">
+                                {{totalsale}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item purchase-box">
+                        <div class="data-icon">
+                            <img src="{%static 'purchase.png'%}" alt="purchase">
+                        </div>
+                        <div class="data-content">
+                            <div class="data-title">
+                                <h5>Total Purchase</h5>
+                            </div>
+                            <div class="data-quantity">
+                                {{totalpurchase}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item expense-box">
+                        <div class="data-icon">
+                            <img src="{%static 'expense.png'%}" alt="purchase">
+                        </div>
+                        <div class="data-content">
+                            <div class="data-title">
+                                <h5>Total Credit</h5>
+                            </div>
+                            <div class="data-quantity">
+                                {{totalexpense}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item saving-box">
+                        <div class="data-icon">
+                            <img src="{%static 'purchase.png'%}" alt="purchase">
+                        </div>
+                        <div class="data-content">
+                            <div class="data-title">
+                                <h5>Total Saving</h5>
+                            </div>
+                            <div class="data-quantity">
+                                {{totalsave}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="recently-sold-products box-main">
+                <div class="product-heading box-heading">
+                    <h3>Recently Sold Products</h3>
+                </div>
+                
+                <div class="box-inner prod-inner flex-container">
+                    {%for objects in data%}
+                    <div class="flex-item product-item">
+                        <div class="product-name">
+                            <h5><a href="searchsales{{objects.Product}}">{{objects.Product}}</a></h5>
+                        </div>
+                        <div class="product-quantity">
+                            <p>{{objects.Quantity}}</p>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+
+            </div>
+
+            <!-- heigest creditors -->
+            <div class="box-main heighest-creditors">
+                <div class="box-heading">
+                    <h3>Highest Creditors</h3>
+                </div>
+                
+                <div class="box-inner cred-inner flex-container">
+                    {%for credittt in creditt%}
+                    <div class="flex-item cred-item">
+                        <div class="cred-name">
+                            <h5><a href="{{credittt.id}}">{{credittt.Customer_name}}</a></h5>
+                        </div>
+                        <div class="cred-quantity">
+                            <!-- <p>{{objects.Quantity}}</p> -->
+                            {{credittt.Due_left}}
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+
+            </div>
+
+            <!-- popular products -->
+
+            <div class="popular-products">
+                <div class="popular-products-inner">
+                    <div class="table-contaienr">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>1</th>
+                                    <th>Product Name</th>
+                                    <th>Total Sales</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Subham Sharma</td>
+                                    <td>100</td>
+                                    <td>100000</td>
+                                </tr>
+                                 <tr>
+                                    <td>1</td>
+                                    <td>Subham Sharma</td>
+                                    <td>100</td>
+                                    <td>100000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {%endblock%}
+</body>
+
+</html>
